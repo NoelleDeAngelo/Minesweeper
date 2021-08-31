@@ -2,6 +2,20 @@
 
 
 .boardRow {
-  display: inline-block;
-  
+  width: 50%;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.space {
+  flex:1;
+  height:auto;
+  background-color: grey;
+  border: 1px solid black;
+}
+
+.space::before {
+  content: '';
+  float: left;
+  padding-top: 100%;
 }

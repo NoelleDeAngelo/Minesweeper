@@ -25,7 +25,7 @@ class Board extends React.Component {
   render(){
     return (
     <div>
-      <div>{this.props.num}</div>
+      <div>num of rows{this.props.num}</div>
       {this.state.currentBoard.map((row)=> {
          return (<div class = 'boardRow'>{row.map((space)=> {
           return <Square status= {space}/>
