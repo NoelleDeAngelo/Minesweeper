@@ -8,7 +8,11 @@ class Board extends React.Component {
       currentBoard: this.createBoard(this.props.num)
     }
   }
-
+  componentDidUpdate(prevProps){
+    if (this.props.num !== prevProps.num){
+      this.setState({currentBoard: this.createBoard(this.props.num)})
+    }
+  }
 
   createBoard(size){
     let board =[]
