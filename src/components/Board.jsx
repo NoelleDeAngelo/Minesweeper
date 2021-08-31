@@ -32,9 +32,19 @@ class Board extends React.Component {
   }
 
   handleFlag(element, row, column){
-    console.log('row', row);
-    console.log('column', column)
-    element.target.classList.add('flaged')
+    //console.log('row', row);
+    //console.log('column', column)
+    if (this.state.currentBoard[row][column].status === 'unflaged'){
+      element.target.classList.add('flaged')
+      let updatedBoard= [...this.state.currentBoard]
+      updatedBoard[row][column].status = 'flaged'
+      this.setState({currentBoard: updatedBoard})
+    }else{
+      element.target.classList.remove('flaged')
+      let updatedBoard= [...this.state.currentBoard]
+      updatedBoard[row][column].status = 'unflaged'
+      this.setState({currentBoard: updatedBoard})
+    }
   }
 
   render(){
