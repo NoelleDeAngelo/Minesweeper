@@ -9,10 +9,6 @@ class Board extends React.Component {
     }
   }
 
-  // componentDidMount(){
-  //   this.setState({currentBoard:this.createBoard(5)})
-
-  // }
 
   createBoard(size){
     let board =[]
@@ -31,10 +27,10 @@ class Board extends React.Component {
     <div>
       <div>{this.props.num}</div>
       {this.state.currentBoard.map((row)=> {
-         return row.map((space)=> {
+         return (<div class = 'boardRow'>{row.map((space)=> {
           return <Square status= {space}/>
         }
-        )
+        )}</div>)
       })}
       </div>
   );

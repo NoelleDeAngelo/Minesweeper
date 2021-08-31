@@ -19,7 +19,7 @@ class App extends React.Component {
           <input onChange ={()=>{this.setState({boardSize: document.getElementById('boardSize').value})}} placeholder = '5' id= 'boardSize' type= 'number' min='5' max='20'></input>
           <label for='numOfMines'>Number of Mines</label>
           <input onChange ={()=>{this.setState({boardSize: document.getElementById('numOfMines').value})}} placeholder = '2' id="numOfMines" type= 'number' min='5' max='20'></input>
-          <text>Number of Mines Left {this.state.minesLeft}</text>
+          <div>Number of Mines Left {this.state.minesLeft}</div>
           <Board num = {this.state.boardSize}/>
         </div>
       );

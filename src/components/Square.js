@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Square() {
+export default function Square({status}) {
   return (
     <div>
-      <div>Square</div>
+      <div>{status}</div>
       </div>
   );
 }
