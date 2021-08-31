@@ -4,6 +4,7 @@ import Square from './Square'
 class Board extends React.Component {
   constructor (props){
     super(props);
+    this.handleFlag = this.handleFlag.bind(this)
     this.state ={
       currentBoard: this.createBoard(this.props.num)
     }
@@ -19,11 +20,21 @@ class Board extends React.Component {
     for(let i=0; i<size; i++){
       let row = []
       for (let j=0; j< size; j++){
-        row.push(0)
+        row.push({
+          value: 0,
+          status: 'unflaged',
+          row: i,
+          column: j})
       }
       board.push(row)
     }
     return board;
+  }
+
+  handleFlag(element, row, column){
+    console.log('row', row);
+    console.log('column', column)
+    element.target.classList.add('flaged')
   }
 
   render(){
@@ -32,7 +43,7 @@ class Board extends React.Component {
       <div>num of rows{this.props.num}</div>
       {this.state.currentBoard.map((row)=> {
          return (<div class = 'boardRow'>{row.map((space)=> {
-          return <Square status= {space}/>
+          return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} value= {space.value}/>
         }
         )}</div>)
       })}

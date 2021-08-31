@@ -12,7 +12,7 @@ class App extends React.Component {
       }
     }
     render(){
-      console.log(this.state.boardSize)
+
        return (
         <div className="App">
           <h1>Minesweeper</h1>

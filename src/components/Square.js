@@ -1,7 +1,10 @@
 import React from 'react'
 
-export default function Square({status}) {
+export default function Square({row, column, handleFlag, value}) {
   return (
-      <div class= 'space'>{status}</div>
+      <div onContextMenu = {(e)=>{e.preventDefault(); handleFlag(e, row, column)}} class= 'space'>{value}</div>
   );
 }
+
+
+//e.classList.add('flaged')
