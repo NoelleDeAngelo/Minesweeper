@@ -7,7 +7,7 @@ export default function Square({row, column, handleFlag, handleClick, mine, numO
       <div
         onContextMenu = {(e)=>{e.preventDefault(); handleFlag(e, row, column)}}
         onClick = {(e)=> handleClick(e,row,column)}
-        class= {classes}>{mine ? 'Boom!': numOfAdjacentMines}</div>
+        class= {classes}>{mine ? null : numOfAdjacentMines}</div>
   );
 }
 

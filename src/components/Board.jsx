@@ -116,10 +116,17 @@ class Board extends React.Component {
     return win
   }
 
+  resetGame(){
+    Array.from(document.getElementsByClassName('space')).forEach((e)=>{
+      e.classList.add('hidden')});
+      this.setState({currentBoard: this.createBoard(this.props.boardSize)});
+  }
+
   render(){
     return (
     <div>
       <div>Number of Mines Left: {this.state.numOfMinesLeft}</div>
+      <button onClick= {()=>{this.resetGame()}}> New Game</button>
       {this.state.currentBoard.map((row)=> {
          return (<div class = 'boardRow'>{row.map((space)=> {
           return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} handleClick= {this.handleClick} mine= {space.mine} numOfAdjacentMines= {space.numOfAdjacentMines}/>
