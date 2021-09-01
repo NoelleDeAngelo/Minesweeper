@@ -27,12 +27,12 @@ class Board extends React.Component {
       let row = []
       for (let j=0; j< size; j++){
         spaceNum++
-        let value ='notMine';
+        let mine = false;
         if(mines.indexOf(spaceNum) !== -1 ){
-          value = 'mine'
+          mine = true
         }
         row.push({
-          value: value,
+          mine: mine,
           flagged: false,
           row: i,
           column: j})
@@ -78,29 +78,22 @@ class Board extends React.Component {
   }
 
   handleClick(element, row, column){
-    if (this.state.currentBoard[row][column].value === 'mine'){
+    if (this.state.currentBoard[row][column].mine){
      console.log('this is a mine')
      Array.from(document.getElementsByClassName('space')).forEach((e)=>{
        e.classList.remove('hidden')
      })
     }else{
       element.target.classList.remove('hidden')
-      let updatedBoard= [...this.state.currentBoard]
-      updatedBoard[row][column].flagged = false;
-      this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft + 1}, ()=> {
-        if(this.state.numOfMinesLeft === 0){
-          this.checkForWin() ? console.log('You Win!'): console.log('Something is worng')
-        }
-      })
     }
-
   }
+
 
   checkForWin(){
     let win = true;
     this.state.currentBoard.forEach((row)=> {
       row.forEach((space)=>{
-        if(space.flagged && space.value === 'notMine'){
+        if(space.flagged && !space.mine){
           win = false
         }
       })
@@ -114,7 +107,7 @@ class Board extends React.Component {
       <div>Number of Mines Left: {this.state.numOfMinesLeft}</div>
       {this.state.currentBoard.map((row)=> {
          return (<div class = 'boardRow'>{row.map((space)=> {
-          return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} handleClick= {this.handleClick} value= {space.value}/>
+          return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} handleClick= {this.handleClick} mine= {space.mine}/>
         }
         )}</div>)
       })}
