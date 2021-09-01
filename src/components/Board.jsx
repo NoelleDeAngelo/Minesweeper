@@ -39,6 +39,21 @@ class Board extends React.Component {
       }
       board.push(row)
     }
+    for(let row=0; row<size; row++){
+      for (let col=0; col< size; col++){
+        let numOfAdjacentMines = 0;
+        for(let rowOffSet =-1; rowOffSet<= 1; rowOffSet++){
+          for(let colOffSet =-1; colOffSet <= 1; colOffSet++){
+            if (board[row-rowOffSet] === undefined || board[row-rowOffSet][col-colOffSet] === undefined){
+              continue;
+            }else if (board[row-rowOffSet][col-colOffSet].mine){
+               numOfAdjacentMines++;
+            }
+          }
+        }
+        board[row][col].numOfAdjacentMines= numOfAdjacentMines;
+      }
+    }
     return board;
   }
 
@@ -107,7 +122,7 @@ class Board extends React.Component {
       <div>Number of Mines Left: {this.state.numOfMinesLeft}</div>
       {this.state.currentBoard.map((row)=> {
          return (<div class = 'boardRow'>{row.map((space)=> {
-          return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} handleClick= {this.handleClick} mine= {space.mine}/>
+          return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} handleClick= {this.handleClick} mine= {space.mine} numOfAdjacentMines= {space.numOfAdjacentMines}/>
         }
         )}</div>)
       })}
