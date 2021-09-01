@@ -4,7 +4,8 @@ import Square from './Square'
 class Board extends React.Component {
   constructor (props){
     super(props);
-    this.handleFlag = this.handleFlag.bind(this)
+    this.handleFlag = this.handleFlag.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state ={
       currentBoard: this.createBoard(this.props.boardSize),
       numOfMinesLeft: this.props.numOfMines
@@ -54,8 +55,6 @@ class Board extends React.Component {
   }
 
   handleFlag(element, row, column){
-    //console.log('row', row);
-    //console.log('column', column)
     if (this.state.currentBoard[row][column].flagged === false){
       element.target.classList.add('flagged');
       let updatedBoard= [...this.state.currentBoard];
@@ -67,6 +66,25 @@ class Board extends React.Component {
       })
     }else{
       element.target.classList.remove('flagged')
+      let updatedBoard= [...this.state.currentBoard]
+      updatedBoard[row][column].flagged = false;
+      this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft + 1}, ()=> {
+        if(this.state.numOfMinesLeft === 0){
+          this.checkForWin() ? console.log('You Win!'): console.log('Something is worng')
+        }
+      })
+    }
+
+  }
+
+  handleClick(element, row, column){
+    if (this.state.currentBoard[row][column].value === 'mine'){
+     console.log('this is a mine')
+     Array.from(document.getElementsByClassName('space')).forEach((e)=>{
+       e.classList.remove('hidden')
+     })
+    }else{
+      element.target.classList.remove('hidden')
       let updatedBoard= [...this.state.currentBoard]
       updatedBoard[row][column].flagged = false;
       this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft + 1}, ()=> {
@@ -96,7 +114,7 @@ class Board extends React.Component {
       <div>Number of Mines Left: {this.state.numOfMinesLeft}</div>
       {this.state.currentBoard.map((row)=> {
          return (<div class = 'boardRow'>{row.map((space)=> {
-          return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} value= {space.value}/>
+          return <Square row= {space.row} column= {space.column} handleFlag = {this.handleFlag} handleClick= {this.handleClick} value= {space.value}/>
         }
         )}</div>)
       })}

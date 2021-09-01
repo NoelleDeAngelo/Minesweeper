@@ -11,6 +11,7 @@
   flex:1;
   height:auto;
   background-color: grey;
+  color: black;
   border: 1px solid black;
 }
 
@@ -19,7 +20,15 @@
   float: left;
   padding-top: 100%;
 }
-
+.mine{
+  color: black;
+  background-color: red;
+}
+.hidden {
+  background-color: grey;
+  color: gray
+}
 .flagged{
   background-color: yellow;
+  color: yellow;
 }
