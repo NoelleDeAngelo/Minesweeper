@@ -7,4 +7,3 @@ export default function Square({row, column, handleFlag, value}) {
 }
 
 
-//e.classList.add('flaged')

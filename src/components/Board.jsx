@@ -19,12 +19,20 @@ class Board extends React.Component {
   }
 
   createBoard(size){
-    let board =[]
+    let board =[];
+    let mines= this.pickMines(size);
+    console.log(mines)
+    let spaceNum = 0;
     for(let i=0; i<size; i++){
       let row = []
       for (let j=0; j< size; j++){
+        spaceNum++
+        let value ='notMine';
+        if(mines.indexOf(spaceNum) !== -1 ){
+          value = 'mine'
+        }
         row.push({
-          value: 0,
+          value: value,
           status: 'unflagged',
           row: i,
           column: j})
@@ -32,6 +40,18 @@ class Board extends React.Component {
       board.push(row)
     }
     return board;
+  }
+
+  pickMines(size){
+    let total= size ** 2;
+    let mines = [];
+    while (mines.length < this.props.numOfMines) {
+      let nextMine = Math.floor(Math.random() * (total) + 1)
+      if (mines.indexOf(nextMine) === -1){
+        mines.push(nextMine);
+      }
+    }
+    return mines;
   }
 
   handleFlag(element, row, column){
