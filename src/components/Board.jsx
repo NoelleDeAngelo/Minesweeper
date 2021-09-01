@@ -21,7 +21,6 @@ class Board extends React.Component {
   createBoard(size){
     let board =[];
     let mines= this.pickMines(size);
-    console.log(mines)
     let spaceNum = 0;
     for(let i=0; i<size; i++){
       let row = []
@@ -33,7 +32,7 @@ class Board extends React.Component {
         }
         row.push({
           value: value,
-          status: 'unflagged',
+          flagged: false,
           row: i,
           column: j})
       }
@@ -57,17 +56,38 @@ class Board extends React.Component {
   handleFlag(element, row, column){
     //console.log('row', row);
     //console.log('column', column)
-    if (this.state.currentBoard[row][column].status === 'unflagged'){
-      element.target.classList.add('flagged')
-      let updatedBoard= [...this.state.currentBoard]
-      updatedBoard[row][column].status = 'flagged'
-      this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft -1})
+    if (this.state.currentBoard[row][column].flagged === false){
+      element.target.classList.add('flagged');
+      let updatedBoard= [...this.state.currentBoard];
+      updatedBoard[row][column].flagged = true;
+      this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft -1}, ()=> {
+        if(this.state.numOfMinesLeft === 0){
+          this.checkForWin() ? console.log('You Win!'): console.log('Something is worng')
+        }
+      })
     }else{
       element.target.classList.remove('flagged')
       let updatedBoard= [...this.state.currentBoard]
-      updatedBoard[row][column].status = 'unflagged'
-      this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft + 1})
+      updatedBoard[row][column].flagged = false;
+      this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft + 1}, ()=> {
+        if(this.state.numOfMinesLeft === 0){
+          this.checkForWin() ? console.log('You Win!'): console.log('Something is worng')
+        }
+      })
     }
+
+  }
+
+  checkForWin(){
+    let win = true;
+    this.state.currentBoard.forEach((row)=> {
+      row.forEach((space)=>{
+        if(space.flagged && space.value === 'notMine'){
+          win = false
+        }
+      })
+    });
+    return win
   }
 
   render(){
