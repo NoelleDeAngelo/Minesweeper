@@ -1,8 +1,6 @@
 
-
-
 .boardRow {
-  width: 40%;
+  width: 70vh;
   display: flex;
   box-sizing: border-box;
 }
@@ -10,9 +8,11 @@
 .space {
   flex:1;
   height:auto;
-  background-color: grey;
+  background-color: lightgray;
   color: black;
   border: 1px solid black;
+  text-align: center;
+  user-select: none;
 }
 
 .space::before {
