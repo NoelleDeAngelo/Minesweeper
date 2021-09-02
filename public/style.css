@@ -32,3 +32,9 @@
   background-color: yellow;
   color: yellow;
 }
+
+#winText{
+  float:right;
+  margin-top: -30vh;
+  margin-right: 30vw;
+}

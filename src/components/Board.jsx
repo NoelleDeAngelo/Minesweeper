@@ -12,10 +12,15 @@ class Board extends React.Component {
     }
   }
   componentDidUpdate(prevProps){
-    if (this.props.boardSize !== prevProps.boardSize){
-      this.setState({currentBoard: this.createBoard(this.props.boardSize)})
-    } else if(this.props.numOfMines !== prevProps.numOfMines){
-      this.setState({numOfMinesLeft: this.props.numOfMines, currentBoard: this.createBoard(this.props.boardSize)});
+    if ((this.props.boardSize !== prevProps.boardSize) || (this.props.numOfMines !== prevProps.numOfMines)){
+      this.setState({currentBoard: this.createBoard(this.props.boardSize), numOfMinesLeft:this.props.numOfMines})
+      if (document.getElementById('winText')){
+        document.getElementById('winText').remove()
+      }
+      Array.from(document.getElementsByClassName('space')).forEach((e)=>{
+        e.classList.add('hidden');
+        e.classList.remove('flagged');
+      });
     }
   }
 
@@ -76,7 +81,15 @@ class Board extends React.Component {
       updatedBoard[row][column].flagged = true;
       this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft -1}, ()=> {
         if(this.state.numOfMinesLeft === 0){
-          this.checkForWin() ? console.log('You Win!'): console.log('Something is worng')
+          let text = null
+          this.checkForWin() ? text = 'You Win!': text ='A flag is wrong'
+          let winText = document.createElement('div');
+          winText.innerHTML = text;
+          winText.id='winText';
+          document.body.appendChild(winText);
+          console.log(winText)
+        } else if (document.getElementById('winText')){
+          document.getElementById('winText').remove()
         }
       })
     }else{
@@ -85,7 +98,15 @@ class Board extends React.Component {
       updatedBoard[row][column].flagged = false;
       this.setState({currentBoard: updatedBoard, numOfMinesLeft: this.state.numOfMinesLeft + 1}, ()=> {
         if(this.state.numOfMinesLeft === 0){
-          this.checkForWin() ? console.log('You Win!'): console.log('Something is worng')
+          let text = null
+          this.checkForWin() ? text = 'You Win!': text ='A flag is wrong'
+          let winText = document.createElement('div');
+          winText.innerHTML = text;
+          winText.id='winText';
+          document.body.appendChild(winText);
+          console.log(winText)
+        } else if (document.getElementById('winText')){
+          document.getElementById('winText').remove()
         }
       })
     }
@@ -121,7 +142,10 @@ class Board extends React.Component {
       e.classList.add('hidden');
       e.classList.remove('flagged');
     });
-      this.setState({currentBoard: this.createBoard(this.props.boardSize)});
+      this.setState({currentBoard: this.createBoard(this.props.boardSize), numOfMinesLeft:this.props.numOfMines});
+      if (document.getElementById('winText')){
+        document.getElementById('winText').remove()
+      }
   }
 
   render(){
