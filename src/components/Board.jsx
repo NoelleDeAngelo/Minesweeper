@@ -118,7 +118,9 @@ class Board extends React.Component {
 
   resetGame(){
     Array.from(document.getElementsByClassName('space')).forEach((e)=>{
-      e.classList.add('hidden')});
+      e.classList.add('hidden');
+      e.classList.remove('flagged');
+    });
       this.setState({currentBoard: this.createBoard(this.props.boardSize)});
   }
 
